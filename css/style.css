@@ -137,19 +137,6 @@ h1.profile {
   font-weight: 500;
 }
 
-/* animation floating images */
-@keyframes floating {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(25px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
 /* portfolio */
 
 .card-title {
@@ -179,6 +166,51 @@ h1.profile {
   padding: 10px 0;
 }
 
+/* spinner */
+.spinner-border::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid rgb(255, 255, 255);
+  border-top: 3px solid #007bff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+/* animation floating images */
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(25px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateZ(45deg);
+  }
+  20% {
+    transform: rotateZ(90deg);
+  }
+  40% {
+    transform: rotateZ(135deg);
+  }
+  60% {
+    transform: rotateZ(180deg);
+  }
+  80% {
+    transform: rotateZ(225deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
 /* responsive web */
 
 @media (max-width: 992px) {

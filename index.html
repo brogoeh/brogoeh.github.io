@@ -14,7 +14,7 @@
     <!-- My css -->
     <link rel="stylesheet" href="css/style.css" />
 
-    <title>Hello, world!</title>
+    <title>Brogoeh Portfolio</title>
   </head>
   <body>
     <!-- navbar -->
@@ -148,14 +148,30 @@
         <h1>Contact</h1>
         <div class="row">
           <div class="col-md-6 mb-5">
-            <form>
+            <div
+              class="alert alert-warning alert-dismissible fade show alertInfo d-none"
+              role="alert"
+            >
+              <strong>Thank you, </strong> Your message have been sent
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form name="submit-to-google-sheet">
               <div class="form-group">
                 <label for="username">Name</label>
                 <input
                   type="text"
                   class="form-control"
                   id="username"
+                  name="nama"
                   placeholder="Fullname"
+                  required
                 />
               </div>
               <div class="form-group">
@@ -164,7 +180,9 @@
                   type="email"
                   class="form-control"
                   id="email"
+                  name="email"
                   placeholder="name@example.com"
+                  required
                 />
               </div>
               <div class="form-group">
@@ -174,10 +192,30 @@
                   id="message"
                   rows="5"
                   placeholder="Message"
+                  name="pesan"
+                  required
                 ></textarea>
               </div>
 
-              <button class="btn btn-primary">Send</button>
+              <button
+                type="submit"
+                name="submit"
+                class="btn btn-primary sending"
+              >
+                Send
+              </button>
+              <button
+                class="btn btn-primary isLoading d-none"
+                type="button"
+                disabled
+              >
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Loading...
+              </button>
             </form>
           </div>
           <div class="col-md-6">
@@ -207,5 +245,31 @@
     <script src="js/bootstrap/bootstrap.min.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
     <script src="js/script.js"></script>
+
+    <!-- Contact form  -->
+    <script>
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbx_czuNiyTFiwJ17KFNo5b9guoDYdmjHUSVMyk8bk13qT2gA8jFUw9haxkWAoIowNBq/exec";
+      const form = document.forms["submit-to-google-sheet"];
+      const btnSend = document.querySelector(".sending");
+      const btnLoading = document.querySelector(".isLoading");
+      const btnAlert = document.querySelector(".alertInfo");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        btnSend.classList.toggle("d-none");
+        btnLoading.classList.toggle("d-none");
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => {
+            btnSend.classList.toggle("d-none");
+            btnLoading.classList.toggle("d-none");
+            btnAlert.classList.toggle("d-none");
+            console.log("Success!", response);
+
+            form.reset();
+          })
+          .catch((error) => console.error("Error!", error.message));
+      });
+    </script>
   </body>
 </html>
